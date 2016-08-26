@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@null"
+    android:orientation="horizontal"
+    android:paddingTop="60dp">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@null" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:background="@drawable/layout_corner_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Tv_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="22dp"
+            android:gravity="center_horizontal"
+            android:text="提示"
+            android:textColor="@color/color_dimGray"
+            android:textSize="@dimen/text_bigger_greater" />
+
+        <TextView
+            android:id="@+id/Tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:gravity="center_horizontal"
+            android:text="新版重新发布"
+            android:textColor="@color/color_dimGray"
+            android:textSize="@dimen/text_normal"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/Linear_customView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/spacing_left"
+                android:paddingRight="@dimen/spacing_left">
+
+                <EditText
+                    android:id="@+id/Edit_input"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/layout_corner_grey"
+                    android:gravity="center_vertical"
+                    android:hint="请输入短信验证码"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/text_normal" />
+
+                <Button
+                    android:id="@+id/Bt_operation"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/layout_corner_dimgray"
+                    android:text="点击获取"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/text_bigger_lesser" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#F0F0F0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Bt_cancle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="取消"
+                android:textColor="@color/color_dimGray"
+                android:textSize="@dimen/text_bigger_lesser" />
+
+            <View
+                android:id="@+id/View_vertical"
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="#F0F0F0" />
+
+            <Button
+                android:id="@+id/Bt_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="确定"
+                android:textColor="@color/color_dodgerBlue"
+                android:textSize="@dimen/text_bigger_lesser" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@null" />
+
+</LinearLayout>
