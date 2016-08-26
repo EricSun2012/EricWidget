@@ -331,6 +331,13 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
         this.rootViewId = rootViewID;
     }
 
+    private int getRootViewId() {
+        if (rootViewId < 0) {
+            throw new IllegalArgumentException("You should fill rootViewId before,now the rootViewId is less than Zero");
+        }
+        return rootViewId;
+    }
+
     protected void closeKeyBoard() {
         View view = findViewById(rootViewId);
         if (view != null) {
@@ -339,6 +346,49 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
             inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    private Fragment mFragment;
+
+    public void switchContent(Fragment from, Fragment to) {
+        switchContent(from, to, false);
+    }
+
+    public void switchContent(Fragment from, Fragment to, boolean animal) {
+        if (mFragment != to) {
+            mFragment = to;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (animal) {
+                transaction.setCustomAnimations(
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right);
+            }
+            if (!to.isAdded()) {    // 先判断是否被add过
+                transaction.hide(from).add(getRootViewId(), to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
+
+    public void switchContent(Fragment fragment, boolean animal) {
+        if (mFragment != fragment) {
+            mFragment = fragment;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (animal) {
+                transaction.setCustomAnimations(
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right,
+                        R.anim.slide_in_left,
+                        R.anim.slide_out_right);
+            }
+            transaction.replace(getRootViewId(), fragment) // 替换Fragment，实现切换
+                    .commit();
+        }
+    }
+
+
 
     /**
      * 替换fragment

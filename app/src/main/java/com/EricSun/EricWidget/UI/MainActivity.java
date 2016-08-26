@@ -1,12 +1,15 @@
 package com.EricSun.EricWidget.UI;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.EricSun.EricWidget.UI.ActionSheetFragment.ActionsheetFragment;
+import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
 import com.jiechic.library.android.widget.MultiStateView;
 import com.EricSun.EricWidget.Framework.Activity.BaseActivity;
 import com.EricSun.EricWidget.R;
@@ -68,17 +71,25 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            Toast.makeText(getApplicationContext(), "再按一次 退出程序",
-                    Toast.LENGTH_SHORT).show();
-            exitTime = System.currentTimeMillis();
-        } else {
-            AppManager.getAppManager().finishAllActivity();
-        }
 
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK
+//                && event.getAction() == KeyEvent.ACTION_DOWN) {
+//            if ((System.currentTimeMillis() - exitTime) > 2000) {
+//                Toast.makeText(getApplicationContext(), "再按一次 退出程序",
+//                        Toast.LENGTH_SHORT).show();
+//                exitTime = System.currentTimeMillis();
+//            } else {
+//                AppManager.getAppManager().finishAllActivity();
+//                System.exit(0);
+//            }
+//            return true;
+//
+//        }
+//
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     protected void processClick(View v) {
@@ -121,25 +132,31 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     @Override
     public void OnclickedItem(ESTableView tableView, int sectionPosition, int position) {
         switch (position) {
-            case 0: {
+            case 0: {//轮播图
             }
             break;
-            case 1: {
+            case 1: {//饼状图
+                PieFragment mFragment = new PieFragment();
+                addFragment(mFragment, "PieFragment", true);
             }
             break;
-            case 2: {
+            case 2: {//自定义Dialog
             }
             break;
-            case 3: {
+            case 3: {//ActionSheet
+                ActionsheetFragment mFragment = new ActionsheetFragment();
+                addFragment(mFragment, "ActionsheetFragment", true);
+
+
             }
             break;
-            case 4: {
+            case 4: {//圆形进度条
             }
             break;
-            case 5: {
+            case 5: {//
             }
             break;
-            case 6: {
+            case 6: {//
             }
             break;
         }
