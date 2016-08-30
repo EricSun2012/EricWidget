@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rootView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.jiechic.library.android.widget.MultiStateView
+        android:id="@+id/stateView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_whiteSmoke"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_actionbar" />
-
-
-        <com.jiechic.library.android.widget.MultiStateView
-            android:id="@+id/stateView"
+        android:layout_height="match_parent">
+        <com.EricSun.EricWidget.Widget.ESTableView
+            android:id="@+id/tableView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:msvLoadingLayout="@layout/layout_loading">
+            android:layout_height="match_parent"></com.EricSun.EricWidget.Widget.ESTableView>
 
-            <com.EricSun.EricWidget.Widget.ESTableView
-                android:id="@+id/tableView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+    </com.jiechic.library.android.widget.MultiStateView>
 
-
-        </com.jiechic.library.android.widget.MultiStateView>
-
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>

@@ -22,8 +22,11 @@ public class PieFragment extends BaseFragment {
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_pieview, null);
-        TextView title = (TextView) view.findViewById(R.id.txt_title);
-        title.setText("饼图");
+
+        setTitles("饼图");
+        setTitleTextColor(getResources().getColor(R.color.color_white));
+        setTitleBarColor(getResources().getColor(R.color.color_mediumTurquoise));
+
         normalPie = (PieChartView) view.findViewById(R.id.pieview_normal);
         smallPie = (PieChartView) view.findViewById(R.id.pieview_small);
         largePie = (PieChartView) view.findViewById(R.id.pieview_large);

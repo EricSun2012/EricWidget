@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -15,9 +16,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.EricSun.EricWidget.R;
+import com.EricSun.EricWidget.Utils.SystemBarTintManager;
 import com.lidroid.xutils.util.LogUtils;
 import com.EricSun.EricWidget.Utils.DialogUtil;
 import com.EricSun.EricWidget.Widget.CancelQueueToast;
@@ -29,51 +35,57 @@ import cn.finalteam.okhttpfinal.HttpCycleContext;
 import cn.finalteam.okhttpfinal.HttpTaskHandler;
 
 
-public abstract class BaseFragment extends Fragment implements OnClickListener,HttpCycleContext {
+public abstract class BaseFragment extends Fragment implements OnClickListener, HttpCycleContext {
 
     protected final String HTTP_TASK_KEY = "HttpTaskKey_" + hashCode();
-    public View rootView;
+    public ViewGroup rootView;
+    public ViewGroup contentView;//内容视图
+    public ViewGroup actionBarView;//标题栏视图
+
     protected Context ct;
-    protected View loadingView;
-    protected LinearLayout loadfailView;
     protected CustomProgressDialog dialog;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ct = getActivity();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        createRootView(inflater);
+        //获取主视图容器
+        if (null != contentView) {
+            contentView.addView(initView(inflater, container));
+        }
+        return rootView;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        LogUtils.d(this.getClass() + " onActivityCreated");
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
     }
+
     @Override
     public String getHttpTaskKey() {
         return HTTP_TASK_KEY;
     }
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        LogUtils.d(this.getClass() + " onCreate");
-        ct = getActivity();
-    }
+
 
     public View getRootView() {
         return rootView;
     }
 
-    // protected void initTitleBar(View view) {
-    // titleTv = (TextView) view.findViewById(R.id.bar_tv_title);
-    //
-    // bar_rl_left =(RelativeLayout) view.findViewById(R.id.bar_rl_left);
-    // bar_rl_left.setVisibility(View.VISIBLE);
-    // bar_rl_left.setOnClickListener(this);
-    // bar_iv_left = (ImageView) view.findViewById(R.id.bar_iv_left);
-    //
-    // }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        LogUtils.d(this.getClass() + " onCreateView");
-        rootView = initView(inflater, container);
+    private void createRootView(LayoutInflater inflater) {
+        rootView = (ViewGroup) inflater.inflate(R.layout.layout_main, null);
+        actionBarView = (ViewGroup) rootView.findViewById(R.id.layout_title);
+
+        contentView = (ViewGroup) rootView.findViewById(R.id.layout_content);
 
         rootView.setOnTouchListener(
                 new View.OnTouchListener() {
@@ -89,18 +101,46 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,H
                         return false;
                     }
                 });
-        // loadingView = rootView.findViewById(R.id.loading_view);
-        // loadfailView = (LinearLayout)
-        // rootView.findViewById(R.id.ll_load_fail);
-        return rootView;
+    }
+
+    /**
+     * set the title string
+     *
+     * @param title
+     */
+    public void setTitles(String title) {
+        if (null != actionBarView) {
+            TextView titleText = (TextView) actionBarView.findViewById(R.id.txt_title);
+            titleText.setText(title);
+        }
+    }
+
+    /**
+     * set title textcolor
+     *
+     * @param color
+     */
+    public void setTitleTextColor(int color) {
+        if (null != actionBarView) {
+            TextView titleText = (TextView) actionBarView.findViewById(R.id.txt_title);
+            titleText.setTextColor(color);
+        }
+    }
+
+    public void setTitleBarColor(int color) {
+        if (null != actionBarView) {
+            actionBarView.setBackgroundColor(color);
+        }
     }
 
     protected void closeKeyBoard() {
         View view = rootView;
         if (view != null) {
-            InputMethodManager inputmanger = (InputMethodManager) ct
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager) ct.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (null != imm && null != ((Activity) ct).getCurrentFocus()) {
+                imm.hideSoftInputFromWindow(((Activity) ct).getCurrentFocus()
+                        .getWindowToken(), 0);
+            }
         }
     }
 
@@ -110,26 +150,11 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,H
         HttpTaskHandler.getInstance().removeTask(HTTP_TASK_KEY);
     }
 
-    @Override
-    public void onPause() {
-        LogUtils.d(this.getClass() + " onPause");
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        LogUtils.d(this.getClass() + " onResume");
-        super.onResume();
-    }
 
     protected abstract View initView(LayoutInflater inflater,
                                      ViewGroup container);
 
     public abstract void initData(Bundle savedInstanceState);
-
-    public void refreshData() {
-
-    }
 
     protected abstract void processClick(View v);
 
@@ -161,28 +186,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,H
         dialog.show();
     }
 
-    public void showLoadingView() {
-        if (loadingView != null)
-            loadingView.setVisibility(View.VISIBLE);
-    }
-
-    public void dismissLoadingView() {
-        if (loadingView != null)
-            loadingView.setVisibility(View.INVISIBLE);
-    }
-
-    public void showLoadFailView() {
-        if (loadingView != null) {
-            loadingView.setVisibility(View.VISIBLE);
-            loadfailView.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    public void dismissLoadFailView() {
-        if (loadingView != null)
-            loadfailView.setVisibility(View.INVISIBLE);
-    }
 
     public void closeProgressDialog() {
         if (dialog != null) {
@@ -198,7 +201,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener,H
                 break;
         }
         processClick(v);
-
     }
 
 //    protected void loadData(HttpRequest.HttpMethod method, String url,

@@ -6,7 +6,6 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -21,6 +20,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +30,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.EricSun.EricWidget.R;
 import com.EricSun.EricWidget.Utils.AppManager;
 import com.EricSun.EricWidget.Utils.DialogUtil;
+import com.EricSun.EricWidget.Utils.SystemBarTintManager;
+import com.EricSun.EricWidget.Utils.ViewUtils;
 import com.EricSun.EricWidget.Widget.CancelQueueToast;
 import com.EricSun.EricWidget.Widget.CustomDialog;
 import com.EricSun.EricWidget.Widget.CustomProgressDialog;
@@ -50,9 +53,12 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
     protected final String HTTP_TASK_KEY = "HttpTaskKey_" + hashCode();
 
     public ViewGroup rootView;//界面的根视图容器
+    public ViewGroup contentView;//内容视图
+    public ViewGroup actionBarView;//标题栏视图
+    private SystemBarTintManager tintManager;
+
     protected Context ct;
     protected CustomProgressDialog dialog;
-    private View tipsView;//提示信息容器
     private boolean isActive;
     private boolean stopStatus;
     private int rootViewId;
@@ -66,17 +72,76 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        AppManager.getAppManager().addActivity(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(0xA6808080);
-        }
 
+        AppManager.getAppManager().addActivity(this);
         ct = this;
         nojump = false;
-        //获取主视图容器
+        createRootView(LayoutInflater.from(this));
 
-        rootView = (ViewGroup) loadView();
+        //获取主视图容器
+        if (null != contentView) {
+            contentView.addView(loadView());
+        }
+        setContentView(rootView);
+        //根据数据填充已搭建的界面
+        initData(savedInstanceState);
+    }
+
+    /**
+     * set the title string
+     *
+     * @param title
+     */
+    public void setTitles(String title) {
+        if (null != actionBarView) {
+            TextView titleText = (TextView) actionBarView.findViewById(R.id.txt_title);
+            titleText.setText(title);
+        }
+    }
+
+    /**
+     * set title textcolor
+     *
+     * @param color
+     */
+    public void setTitleTextColor(int color) {
+        if (null != actionBarView) {
+            TextView titleText = (TextView) actionBarView.findViewById(R.id.txt_title);
+            titleText.setTextColor(color);
+        }
+    }
+
+    public void setTitleBarColor(int color) {
+        if (null != actionBarView) {
+            actionBarView.setBackgroundColor(color);
+        }
+    }
+
+    public void setStatusBarAndTitleBarColor(int color) {
+        if (null != tintManager) {
+            tintManager.setStatusBarTintColor(color);
+        }
+        setTitleBarColor(color);
+    }
+
+    private void createRootView(LayoutInflater inflater) {
+        rootView = (ViewGroup) inflater.inflate(R.layout.layout_main, null);
+        actionBarView = (ViewGroup) rootView.findViewById(R.id.layout_title);
+
+        contentView = (ViewGroup) rootView.findViewById(R.id.layout_content);
+        setRootViewId(R.id.rootView);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarAlpha(1);
+        }
+
         rootView.setOnTouchListener(
                 new View.OnTouchListener() {
                     @Override
@@ -89,29 +154,7 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
                         return false;
                     }
                 });
-        setContentView(rootView);
-        //根据数据填充已搭建的界面
-        initData(savedInstanceState);
     }
-
-    protected void dissmissTipsView(ViewGroup parentView) {
-        if (null != tipsView) {
-            parentView.removeView(tipsView);
-        }
-        parentView.invalidate();
-    }
-
-    protected void showTipsView(View tipsView, ViewGroup parentView) {
-
-        this.tipsView = tipsView;
-        if (null != parentView) {
-            tipsView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            parentView.addView(tipsView);
-        } else {
-            rootView.addView(tipsView);
-        }
-    }
-
 
     @Override
     public String getHttpTaskKey() {
@@ -167,9 +210,9 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         HttpTaskHandler.getInstance().removeTask(HTTP_TASK_KEY);
         AppManager.getAppManager().finishActivity(this);
+        super.onDestroy();
     }
 
 	/*
@@ -387,7 +430,6 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
                     .commit();
         }
     }
-
 
 
     /**

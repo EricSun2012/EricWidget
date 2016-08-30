@@ -19,9 +19,9 @@ public class ActionsheetFragment extends BaseFragment {
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_actionsheet, null);
 
-        TextView title = (TextView) view.findViewById(R.id.txt_title);
-        title.setText("表单");
-
+        setTitles("表单");
+        setTitleTextColor(getResources().getColor(R.color.color_white));
+        setTitleBarColor(getResources().getColor(R.color.color_mediumTurquoise));
         view.findViewById(R.id.bt_operation).setOnClickListener(this);
         return view;
     }

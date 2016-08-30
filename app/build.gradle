@@ -35,4 +35,6 @@ dependencies {
     compile 'com.jiechic.library:MultiStateView:0.0.4'
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile project(':PullToRefresh')
+
+    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
 }

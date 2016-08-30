@@ -1,19 +1,17 @@
 package com.EricSun.EricWidget.UI;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.EricSun.EricWidget.UI.ActionSheetFragment.ActionsheetFragment;
 import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
+import com.EricSun.EricWidget.Utils.ViewUtils;
 import com.jiechic.library.android.widget.MultiStateView;
 import com.EricSun.EricWidget.Framework.Activity.BaseActivity;
 import com.EricSun.EricWidget.R;
-import com.EricSun.EricWidget.Utils.AppManager;
 import com.EricSun.EricWidget.Utils.ViewHolder;
 import com.EricSun.EricWidget.Widget.ESTableView;
 
@@ -34,13 +32,14 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     protected View loadView() {
         LayoutInflater inflater = LayoutInflater.from(ct);
         View view = inflater.inflate(R.layout.layout_main_activity, null);
-        setRootViewId(R.id.rootView);
 
         tableView = (ESTableView) view.findViewById(R.id.tableView);
         stateView = (MultiStateView) view.findViewById(R.id.stateView);
-        TextView title = (TextView) view.findViewById(R.id.txt_title);
-        title.setText("控件模板");
+        setTitles("控件模板");
+        setTitleTextColor(getResources().getColor(R.color.color_white));
 
+
+        setStatusBarAndTitleBarColor(getResources().getColor(R.color.color_mediumTurquoise));
         stateView.setState(MultiStateView.ContentState.LOADING);
         tableView.delegate = this;
         tableView.setAdapter();

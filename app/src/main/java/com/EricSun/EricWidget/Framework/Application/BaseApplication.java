@@ -16,6 +16,7 @@ import android.util.DisplayMetrics;
 
 import com.EricSun.EricWidget.Framework.Network.NetWorkState;
 import com.EricSun.EricWidget.Utils.NetUtil;
+import com.zhy.m.permission.MPermissions;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -42,10 +43,7 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         mState = NetUtil.hasNetwork(getApplicationContext()) ? NetWorkState.NetWorkStateWiFi : NetWorkState.NetWorkStateNone;
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (null != tm && null != tm.getDeviceId()) {
-            deviceId = tm.getDeviceId();
-        }
+//        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
         // getPackageName()是你当前类的包名，0代表是获取版本信息
         PackageManager pm = getPackageManager();
