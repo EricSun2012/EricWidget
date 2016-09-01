@@ -118,8 +118,16 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
     }
 
     public void setStatusBarAndTitleBarColor(int color) {
-        if (null != tintManager) {
-            tintManager.setStatusBarTintColor(color);
+
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(color);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            if (null != tintManager) {
+                tintManager.setStatusBarTintColor(color);
+            }
         }
         setTitleBarColor(color);
     }
@@ -131,8 +139,7 @@ public abstract class BaseActivity extends FragmentActivity implements HttpCycle
         contentView = (ViewGroup) rootView.findViewById(R.id.layout_content);
         setRootViewId(R.id.rootView);
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             // Translucent status bar
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.EricSun.EricWidget.R;
 
+
 public class CustomDialog extends Dialog {
     public LinearLayout customLayout;
     private EditText editText;
@@ -43,6 +44,33 @@ public class CustomDialog extends Dialog {
         this.setCanceledOnTouchOutside(false);
     }
 
+    public void setCustomDialog(String title,
+                                String content,
+                                String buttonTitle[],
+                                View.OnClickListener buttonListener[]) {
+        titleView.setText(title);
+        if (null != content && content.length() > 0) {
+            contentView.setVisibility(View.VISIBLE);
+            contentView.setText(content);
+        }
+        if (null != buttonTitle) {
+            if (buttonTitle.length >= 2) {
+                negativeButton.setText(buttonTitle[1]);
+            }
+            positiveButton.setText(buttonTitle[0]);
+            if (buttonTitle.length == 1) {
+                setSingleButton(true);
+            }
+        }
+        if (null != buttonListener) {
+            if (buttonListener.length >= 2) {
+                negativeButton.setOnClickListener(buttonListener[1]);
+            }
+            positiveButton.setOnClickListener(buttonListener[0]);
+        }
+    }
+
+
     /**
      * 锁定dialog
      *
@@ -64,6 +92,12 @@ public class CustomDialog extends Dialog {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    public String getContent() {
+        return contentView.getText().toString();
+    }
+
+
     /**
      * 显示单一positiveButton
      *
@@ -74,9 +108,6 @@ public class CustomDialog extends Dialog {
         negativeButton.setVisibility(isSingle ? View.GONE : View.VISIBLE);
     }
 
-    public String getContent() {
-        return contentView.getText().toString();
-    }
 
     public void setContent(String contentString) {
         contentView.setVisibility(View.VISIBLE);

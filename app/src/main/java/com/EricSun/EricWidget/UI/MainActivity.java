@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.EricSun.EricWidget.UI.ActionSheetFragment.ActionsheetFragment;
+import com.EricSun.EricWidget.UI.CustomDialogFragment.CustomDialogFragment;
 import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
+import com.EricSun.EricWidget.UI.RoundProgressFragment.RoundFragment;
 import com.EricSun.EricWidget.Utils.ViewUtils;
 import com.jiechic.library.android.widget.MultiStateView;
 import com.EricSun.EricWidget.Framework.Activity.BaseActivity;
@@ -140,6 +142,8 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
             }
             break;
             case 2: {//自定义Dialog
+                CustomDialogFragment mFragment = new CustomDialogFragment();
+                addFragment(mFragment, "CustomDialogFragment", true);
             }
             break;
             case 3: {//ActionSheet
@@ -150,6 +154,9 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
             }
             break;
             case 4: {//圆形进度条
+                RoundFragment mFragment = new RoundFragment();
+                addFragment(mFragment, "RoundFragment", true);
+
             }
             break;
             case 5: {//
