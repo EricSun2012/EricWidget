@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.EricSun.EricWidget.UI.ActionSheetFragment.ActionsheetFragment;
+import com.EricSun.EricWidget.UI.CFlowFragment.CFlowFragment;
 import com.EricSun.EricWidget.UI.CustomDialogFragment.CustomDialogFragment;
+import com.EricSun.EricWidget.UI.DragGridFragment.DragFragment;
 import com.EricSun.EricWidget.UI.NetworkProgressFragment.NetworkFragment;
 import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
 import com.EricSun.EricWidget.UI.RoundProgressFragment.RoundFragment;
@@ -27,7 +29,7 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     private ESTableView tableView;
     private MultiStateView stateView;
 
-    String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog", "ActionSheet", "圆形进度条", "网络进度", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog", "ActionSheet", "圆形进度条", "网络进度", "可拖动view", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
 
     @Override
@@ -115,6 +117,8 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     public void OnclickedItem(ESTableView tableView, int sectionPosition, int position) {
         switch (position) {
             case 0: {//轮播图
+                CFlowFragment mFragment = new CFlowFragment();
+                addFragment(mFragment, "CFlowFragment", true);
             }
             break;
             case 1: {//饼状图
@@ -145,7 +149,9 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
                 addFragment(mFragment, "NetworkFragment", true);
             }
             break;
-            case 6: {//
+            case 6: {//可拖动view
+                DragFragment mFragment = new DragFragment();
+                addFragment(mFragment, "DragFragment", true);
             }
             break;
         }
