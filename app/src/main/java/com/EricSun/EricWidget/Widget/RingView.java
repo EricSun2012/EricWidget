@@ -45,12 +45,4 @@ public class RingView extends View {
         paint.setAntiAlias(true); // 消除锯齿
         canvas.drawCircle(centre, centre, radius, paint); // 画出圆环
     }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int width = getMeasuredWidth();
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
 }

@@ -2,9 +2,12 @@ package com.EricSun.EricWidget.Widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -42,6 +45,11 @@ public class CustomDialog extends Dialog {
         negativeButton = (Button) mView.findViewById(R.id.Bt_cancle);
         super.setContentView(mView);
         this.setCanceledOnTouchOutside(false);
+
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
     }
 
     public void setCustomDialog(String title,
