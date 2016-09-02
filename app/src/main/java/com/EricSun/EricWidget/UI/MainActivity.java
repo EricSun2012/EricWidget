@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     private ESTableView tableView;
     private MultiStateView stateView;
 
-    String[] mData = new String[]{"轮播图", "饼状图", "自定义Dialog", "ActionSheet", "圆形进度条", "网络进度", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog", "ActionSheet", "圆形进度条", "网络进度", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 
 
     @Override

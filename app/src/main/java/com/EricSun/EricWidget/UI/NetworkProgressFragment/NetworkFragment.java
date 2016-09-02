@@ -9,23 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.EricSun.EricWidget.DemoApplication;
 import com.EricSun.EricWidget.Framework.Fragment.BaseFragment;
 import com.EricSun.EricWidget.R;
 import com.EricSun.EricWidget.Utils.BitmapUtil;
-import com.EricSun.EricWidget.Utils.FileUtils;
-import com.EricSun.EricWidget.Utils.StringUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
-import cn.finalteam.okhttpfinal.BaseHttpRequestCallback;
 import cn.finalteam.okhttpfinal.FileDownloadCallback;
 import cn.finalteam.okhttpfinal.HttpRequest;
 import cn.finalteam.okhttpfinal.JsonHttpRequestCallback;
