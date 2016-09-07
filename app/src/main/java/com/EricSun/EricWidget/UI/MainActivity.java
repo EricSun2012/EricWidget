@@ -14,6 +14,7 @@ import com.EricSun.EricWidget.UI.DownloadFragment.DownloadFragment;
 import com.EricSun.EricWidget.UI.DragGridFragment.DragFragment;
 import com.EricSun.EricWidget.UI.NetworkProgressFragment.NetworkFragment;
 import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
+import com.EricSun.EricWidget.UI.RefreshFragment.RefreshFragment;
 import com.EricSun.EricWidget.UI.RoundProgressFragment.RoundFragment;
 import com.jiechic.library.android.widget.MultiStateView;
 import com.EricSun.EricWidget.Framework.Activity.BaseActivity;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog",
             "ActionSheet", "圆形进度条", "网络进度",
             "可拖动view", "轮播图", "下载&安装QQ",
-            "", "", "",
+            "刷新控件", "", "",
             "", "", "",
             "", "", "",
             "", "", "", ""};
@@ -168,6 +169,11 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
             case 8: {//下载&安装QQ
                 DownloadFragment mFragment = new DownloadFragment();
                 addFragment(mFragment, "DownloadFragment", true);
+            }
+            break;
+            case 9: {//刷新控件
+                RefreshFragment mFragment = new RefreshFragment();
+                addFragment(mFragment, "RefreshFragment", true);
             }
             break;
         }

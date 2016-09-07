@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.EricSun.EricWidget.Framework.Fragment.BaseFragment;
 import com.EricSun.EricWidget.R;
-import com.EricSun.EricWidget.Utils.FileUtils;
 
 import java.io.File;
 
