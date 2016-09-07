@@ -36,5 +36,6 @@ dependencies {
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile project(':PullToRefresh')
 
-    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
+    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'//https://github.com/supercwn/SuperRecycleView
+    compile 'com.shizhefei:ViewPagerIndicator:1.1.3'//https://github.com/LuckyJayce/ViewPagerIndicator
 }

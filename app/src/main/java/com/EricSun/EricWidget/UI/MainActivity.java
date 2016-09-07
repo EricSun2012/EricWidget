@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.EricSun.EricWidget.UI.ActionSheetFragment.ActionsheetFragment;
+import com.EricSun.EricWidget.UI.BannerFragment.BannerFragment;
 import com.EricSun.EricWidget.UI.CFlowFragment.CFlowFragment;
 import com.EricSun.EricWidget.UI.CustomDialogFragment.CustomDialogFragment;
+import com.EricSun.EricWidget.UI.DownloadFragment.DownloadFragment;
 import com.EricSun.EricWidget.UI.DragGridFragment.DragFragment;
 import com.EricSun.EricWidget.UI.NetworkProgressFragment.NetworkFragment;
 import com.EricSun.EricWidget.UI.PieViewFragment.PieFragment;
@@ -29,7 +31,13 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
     private ESTableView tableView;
     private MultiStateView stateView;
 
-    String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog", "ActionSheet", "圆形进度条", "网络进度", "可拖动view", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+    String[] mData = new String[]{"行自适应", "饼状图", "自定义Dialog",
+            "ActionSheet", "圆形进度条", "网络进度",
+            "可拖动view", "轮播图", "下载&安装QQ",
+            "", "", "",
+            "", "", "",
+            "", "", "",
+            "", "", "", ""};
 
 
     @Override
@@ -134,8 +142,6 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
             case 3: {//ActionSheet
                 ActionsheetFragment mFragment = new ActionsheetFragment();
                 addFragment(mFragment, "ActionsheetFragment", true);
-
-
             }
             break;
             case 4: {//圆形进度条
@@ -152,6 +158,16 @@ public class MainActivity extends BaseActivity implements ESTableView.ESTableVie
             case 6: {//可拖动view
                 DragFragment mFragment = new DragFragment();
                 addFragment(mFragment, "DragFragment", true);
+            }
+            break;
+            case 7: {//轮播图
+                BannerFragment mFragment = new BannerFragment();
+                addFragment(mFragment, "BannerFragment", true);
+            }
+            break;
+            case 8: {//下载&安装QQ
+                DownloadFragment mFragment = new DownloadFragment();
+                addFragment(mFragment, "DownloadFragment", true);
             }
             break;
         }

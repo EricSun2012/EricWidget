@@ -21,7 +21,7 @@ public class DragFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
-        setTitles("网络进度");
+        setTitles("可拖动view");
         setTitleTextColor(getResources().getColor(R.color.color_white));
         setTitleBarColor(getResources().getColor(R.color.color_mediumTurquoise));
 
